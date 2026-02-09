@@ -1,6 +1,67 @@
 import React, { useEffect, useRef } from 'react';
 import './NeuralNetwork.css';
 
+class Node {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1;
+        this.baseRadius = this.radius;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+    }
+
+    update(mouse) {
+        // Movement
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce off edges
+        if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
+
+        // Pulse effect
+        this.pulsePhase += 0.02;
+        this.radius = this.baseRadius + Math.sin(this.pulsePhase) * 0.5;
+
+        // Mouse interaction
+        if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+                const force = (150 - dist) / 150;
+                this.x -= dx * force * 0.02;
+                this.y -= dy * force * 0.02;
+            }
+        }
+    }
+
+    draw(ctx) {
+        // Glow effect
+        const gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, this.radius * 3
+        );
+        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.8)');
+        gradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.3)');
+        gradient.addColorStop(1, 'rgba(96, 165, 250, 0)');
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Core
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.fill();
+    }
+}
+
 const NeuralNetwork = () => {
     const canvasRef = useRef(null);
     const mouseRef = useRef({ x: null, y: null });
@@ -18,73 +79,11 @@ const NeuralNetwork = () => {
         };
         setCanvasSize();
 
-        // Node class
-        class Node {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 2 + 1;
-                this.baseRadius = this.radius;
-                this.pulsePhase = Math.random() * Math.PI * 2;
-            }
-
-            update() {
-                // Movement
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Bounce off edges
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-                // Pulse effect
-                this.pulsePhase += 0.02;
-                this.radius = this.baseRadius + Math.sin(this.pulsePhase) * 0.5;
-
-                // Mouse interaction
-                const mouse = mouseRef.current;
-                if (mouse.x !== null && mouse.y !== null) {
-                    const dx = mouse.x - this.x;
-                    const dy = mouse.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        const force = (150 - dist) / 150;
-                        this.x -= dx * force * 0.02;
-                        this.y -= dy * force * 0.02;
-                    }
-                }
-            }
-
-            draw() {
-                // Glow effect
-                const gradient = ctx.createRadialGradient(
-                    this.x, this.y, 0,
-                    this.x, this.y, this.radius * 3
-                );
-                gradient.addColorStop(0, 'rgba(37, 99, 235, 0.8)');
-                gradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.3)');
-                gradient.addColorStop(1, 'rgba(96, 165, 250, 0)');
-
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
-                ctx.fill();
-
-                // Core
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.fill();
-            }
-        }
-
         // Initialize nodes
         const nodeCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
         nodesRef.current = [];
         for (let i = 0; i < nodeCount; i++) {
-            nodesRef.current.push(new Node());
+            nodesRef.current.push(new Node(canvas));
         }
 
         // Draw connections between nodes
@@ -182,14 +181,11 @@ const NeuralNetwork = () => {
 
             // Update and draw nodes
             nodesRef.current.forEach(node => {
-                node.update();
+                node.update(mouseRef.current);
+                node.draw(ctx);
             });
 
             drawConnections();
-
-            nodesRef.current.forEach(node => {
-                node.draw();
-            });
 
             // Flow particles
             if (Math.random() < 0.1) {
@@ -221,7 +217,7 @@ const NeuralNetwork = () => {
             // Reinitialize nodes for new size
             const newNodeCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
             while (nodesRef.current.length < newNodeCount) {
-                nodesRef.current.push(new Node());
+                nodesRef.current.push(new Node(canvas));
             }
             while (nodesRef.current.length > newNodeCount) {
                 nodesRef.current.pop();

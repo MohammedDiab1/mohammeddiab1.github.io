@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
+import Home from './components/Home';
 import CustomCursor from './components/CustomCursor';
+import CV from './components/CV';
 import './index.css';
 
 // Initialize Google Analytics
@@ -18,14 +17,16 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <CustomCursor />
-      <Navbar />
-      <Hero />
-      <About />
-      <Projects />
-      <Contact />
-    </div>
+    <Router basename="/my-website">
+      <div className="App">
+        <CustomCursor />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cv" element={<CV />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
