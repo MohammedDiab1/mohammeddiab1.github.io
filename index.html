@@ -37,7 +37,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Structured data: Person (helps Google build a rich result / knowledge panel) -->
+    <!-- Structured data: Person (helps Google build a rich result / knowledge panel)
+         TODO: once the Wikidata item exists, add its URL (https://www.wikidata.org/wiki/Q…)
+         as the FIRST entry in "sameAs" below — Google weights it heavily for entity matching. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -45,7 +47,9 @@
       "name": "Mohammed Diab",
       "givenName": "Mohammed",
       "familyName": "Diab",
+      "honorificSuffix": "PhD",
       "jobTitle": "Principal Autonomy Engineer",
+      "description": "Roboticist and artificial intelligence researcher working on task and motion planning, knowledge representation for autonomous robots, human-robot interaction, and embodied AI.",
       "url": "https://mohammeddiab1.github.io/my-website/",
       "image": "https://mohammeddiab1.github.io/my-website/profile.png",
       "email": "mailto:m.diab.phd@gmail.com",
@@ -69,8 +73,18 @@
       ],
       "sameAs": [
         "https://www.linkedin.com/in/mohammed-diab-5b8312152/",
-        "https://github.com/MohammedDiab1"
-      ]
+        "https://github.com/MohammedDiab1",
+        "https://orcid.org/0000-0002-5743-5190",
+        "https://scholar.google.com/citations?user=73pGUVsAAAAJ",
+        "https://www.researchgate.net/profile/Mohammed-Diab-2",
+        "https://www.imperial.ac.uk/personal-robotics/people/previous-post-doctoral-researchers/dr-mohammed-diab/",
+        "https://researchportal.plymouth.ac.uk/en/persons/mohammed-diab"
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "ORCID",
+        "value": "0000-0002-5743-5190"
+      }
     }
     </script>
   </head>

@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import CustomCursor from './components/CustomCursor';
 import CV from './components/CV';
+import Bio from './components/Bio';
 import './index.css';
 
 // Initialize Google Analytics
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cv" element={<CV />} />
+          <Route path="/bio" element={<Bio />} />
         </Routes>
       </div>
     </Router>

@@ -76,6 +76,11 @@ const Navbar = () => {
             </li>
           ))}
           <li className="nav-item">
+            <RouterLink to="/bio" onClick={() => setIsOpen(false)}>
+              Bio
+            </RouterLink>
+          </li>
+          <li className="nav-item">
             <RouterLink to="/cv" onClick={() => setIsOpen(false)}>
               CV
             </RouterLink>
