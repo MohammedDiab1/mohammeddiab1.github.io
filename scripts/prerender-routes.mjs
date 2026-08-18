@@ -24,11 +24,14 @@ const routes = [
   },
 ]
 
+// Pages 301s /bio to /bio/, so the trailing slash is the canonical form.
+const url = (route) => `${origin}/${route.path}/`
+
 const replacements = (route) => [
   [/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`],
   [/(<meta name="description" content=")[^"]*(")/, `$1${route.description}$2`],
-  [/(<link rel="canonical" href=")[^"]*(")/, `$1${origin}/${route.path}$2`],
-  [/(<meta property="og:url" content=")[^"]*(")/, `$1${origin}/${route.path}$2`],
+  [/(<link rel="canonical" href=")[^"]*(")/, `$1${url(route)}$2`],
+  [/(<meta property="og:url" content=")[^"]*(")/, `$1${url(route)}$2`],
   [/(<meta property="og:title" content=")[^"]*(")/, `$1${route.title}$2`],
   [/(<meta property="og:description" content=")[^"]*(")/, `$1${route.description}$2`],
   [/(<meta name="twitter:title" content=")[^"]*(")/, `$1${route.title}$2`],
