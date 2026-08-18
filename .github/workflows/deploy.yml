@@ -38,6 +38,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # GitHub Pages has no server-side rewrites, so a direct request to /bio
+      # or /cv would 404. Serving index.html as 404.html lets the SPA router
+      # handle deep links, which is what makes those routes indexable.
+      - name: Add SPA fallback
+        run: cp dist/index.html dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

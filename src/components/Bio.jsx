@@ -11,7 +11,7 @@ const Bio = () => {
             </header>
 
             <aside className="bio-infobox">
-                <img src="/my-website/profile.png" alt="Mohammed Diab" className="bio-infobox-img" />
+                <img src="/profile.png" alt="Mohammed Diab" className="bio-infobox-img" />
                 <table>
                     <tbody>
                         <tr>
