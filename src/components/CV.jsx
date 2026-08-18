@@ -13,7 +13,7 @@ const CV = () => {
                         <span className="info-item"><FaMapMarkerAlt /> London Area, United Kingdom</span>
                         <span className="info-item"><a href="mailto:m.diab.phd@gmail.com"><FaEnvelope /> m.diab.phd@gmail.com</a></span>
                         <span className="info-item"><a href="https://www.linkedin.com/in/mohammed-diab-5b8312152" target="_blank" rel="noreferrer"><FaLinkedin /> LinkedIn</a></span>
-                        <span className="info-item"><a href="https://github.com/mdiab" target="_blank" rel="noreferrer"><FaGithub /> GitHub</a></span>
+                        <span className="info-item"><a href="https://github.com/MohammedDiab1" target="_blank" rel="noreferrer"><FaGithub /> GitHub</a></span>
                         <span className="info-item"><a href="https://mohammeddiab1.github.io" target="_blank" rel="noreferrer"><FaGlobe /> Website</a></span>
                         <span className="info-item"><a href="https://scholar.google.com/citations?user=73pGUVsAAAAJ&hl=en" target="_blank" rel="noreferrer"><FaGraduationCap /> Google Scholar</a></span>
                         <span className="info-item"><a href="https://www.youtube.com/@mohammeddiab4017" target="_blank" rel="noreferrer"><FaYoutube /> YouTube</a></span>
